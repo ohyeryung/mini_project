@@ -5,7 +5,7 @@
 <pre>
  - JDK 11
  - Gradle 7.6.1
- - SpringBoot 2.7.4
+ - SpringBoot 2.6.7
 </pre>
 
 ### 게시판 기능
