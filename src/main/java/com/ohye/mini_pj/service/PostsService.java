@@ -2,6 +2,7 @@ package com.ohye.mini_pj.service;
 
 import com.ohye.mini_pj.domain.posts.Posts;
 import com.ohye.mini_pj.domain.posts.PostsRepository;
+import com.ohye.mini_pj.web.dto.PostsListResponseDto;
 import com.ohye.mini_pj.web.dto.PostsResponseDto;
 import com.ohye.mini_pj.web.dto.PostsSaveRequestDto;
 import com.ohye.mini_pj.web.dto.PostsUpdateRequestDto;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,5 +36,12 @@ public class PostsService {
                 () -> new IllegalArgumentException("존재하지 않는 게시글입니다. + id = " + id)
         );
         return new PostsResponseDto(entity);
+    }
+
+    @Transactional
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
