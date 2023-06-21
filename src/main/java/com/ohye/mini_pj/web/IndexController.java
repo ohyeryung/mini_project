@@ -1,5 +1,6 @@
 package com.ohye.mini_pj.web;
 
+import com.ohye.mini_pj.config.auth.LoginUser;
 import com.ohye.mini_pj.config.auth.dto.SessionUser;
 import com.ohye.mini_pj.service.PostsService;
 import com.ohye.mini_pj.web.dto.PostsResponseDto;
@@ -9,19 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 @RequiredArgsConstructor
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
-
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         if(user != null) {
             model.addAttribute("userName", user.getName());
